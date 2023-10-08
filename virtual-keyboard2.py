@@ -1,11 +1,38 @@
 import tkinter as tk
 from tkinter import ttk
+import pyautogui
+import cv2
 
+
+def move_cursor(event):
+    x, y = pyautogui.position()  # Get current cursor position
+
+    if event.keysym == 'Up':
+        y -= 50  # Move the cursor up
+    elif event.keysym == 'Down':
+        y += 50  # Move the cursor down
+    elif event.keysym == 'Left':
+        x -= 90  # Move the cursor to the left
+    elif event.keysym == 'Right':
+        x += 90  # Move the cursor to the right
+
+    pyautogui.moveTo(x, y)
+def left_click(event):
+    pyautogui.click()
+def set_left_click(event):
+    left_click(event)    
+# Bind arrow key events to the move_cursor function
 key = tk.Tk()
 
 key.title('On Screen Keyboard')
 
-
+key.bind("<Up>", move_cursor)
+key.bind("<Down>", move_cursor)
+key.bind("<Left>", move_cursor)
+key.bind("<Right>", move_cursor)
+button = tk.Button(key, text="Left Click Me")
+button.bind("<Button-1>",left_click)
+key.bind("<Return>",set_left_click)
 key.geometry('1385x320')  # Window size
 key.maxsize(width=1385, height=320)
 key.minsize(width=1385, height=320)
